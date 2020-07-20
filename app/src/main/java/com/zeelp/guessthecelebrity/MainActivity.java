@@ -63,7 +63,6 @@ public class MainActivity extends Activity {
         rightAnswer = 0;
         totalAnswer = 0;
 
-
         createNewQuestion();
         timerFunction();
     }
@@ -75,7 +74,6 @@ public class MainActivity extends Activity {
         protected Bitmap doInBackground(String... urls) {
 
             try {
-
                 URL url = new URL(urls[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
@@ -83,17 +81,11 @@ public class MainActivity extends Activity {
 
                 Bitmap myBitmap = BitmapFactory.decodeStream(inputStream);
                 return myBitmap;
-
             } catch (MalformedURLException e) {
-
                 e.printStackTrace();
-
             } catch (IOException e) {
-
                 e.printStackTrace();
-
             }
-
             return null;
         }
     }
@@ -121,15 +113,11 @@ public class MainActivity extends Activity {
                     result += current;
                     data = reader.read();
                 }
-
                 return result;
 
             } catch (Exception e) {
-
                 e.printStackTrace();
-
             }
-
             return null;
         }
     }
@@ -142,8 +130,6 @@ public class MainActivity extends Activity {
 
                 timerTextView.setText(seconds);
                 timerTextView.setVisibility(View.VISIBLE);
-
-
             }
 
             public void onFinish(){
@@ -152,8 +138,6 @@ public class MainActivity extends Activity {
             }
         }.start();
     }
-
-
 
     public void gameOverFunction(){
         gameOverTextView.setVisibility(View.VISIBLE);
@@ -175,12 +159,9 @@ public class MainActivity extends Activity {
     }
 
     public void createNewQuestion() {
-
         Random random = new Random();
         chosenCeleb = random.nextInt(celebURLs.size());
-
         ImageDownloader imageTask = new ImageDownloader();
-
         Bitmap celebImage;
 
         try {
@@ -192,19 +173,12 @@ public class MainActivity extends Activity {
             int incorrectAnswerLocation;
 
             for (int i = 0; i < 4; i++) {
-
                 if (i == locationOfCorrectAnswer) {
-
                     answers[i] = celebNames.get(chosenCeleb);
-
                 } else {
-
                     incorrectAnswerLocation = random.nextInt(celebURLs.size());
-
                     while (incorrectAnswerLocation == chosenCeleb) {
-
                         incorrectAnswerLocation = random.nextInt(celebURLs.size());
-
                     }
                     answers[i] = celebNames.get(incorrectAnswerLocation);
                 }
@@ -231,7 +205,6 @@ public class MainActivity extends Activity {
 
         totalAnswer++;
         scoreTextView.setText(Integer.toString(rightAnswer) + "/" + Integer.toString(totalAnswer));
-
         createNewQuestion();
     }
 
@@ -246,7 +219,6 @@ public class MainActivity extends Activity {
         try {
 
             result = task.execute("http://www.posh24.se/kandisar").get();
-
             String[] splitResult = result.split("<div class=\"sidebarContainer\">");
 
             Pattern p = Pattern.compile("<img src=\"(.*?)\"");
@@ -262,16 +234,10 @@ public class MainActivity extends Activity {
             while (m.find()) {
                 celebNames.add(m.group(1));
             }
-
-
         } catch (InterruptedException e) {
-
             e.printStackTrace();
-
         } catch (ExecutionException e) {
-
             e.printStackTrace();
-
         }
 
         createNewQuestion();
